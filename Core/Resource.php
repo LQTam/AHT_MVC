@@ -32,6 +32,14 @@ class Resource implements ResourceInterface
             array_push($placeNames, ':' . $key);
         }
 
+        $columns = [];
+        foreach (array_keys($properties) as $k => $v) {
+            if ($v !== 'id') {
+                array_push($columns, $v . ' = :' . $v);
+            }
+        }
+
+        $columns = implode(',', $columns);
         $columnsString = implode(',', array_keys($properties));
         $placeNamesString = implode(',', $placeNames);
 
@@ -44,7 +52,7 @@ class Resource implements ResourceInterface
             return $req->execute(array_merge($properties, $date));
         } else {
 
-            $sql = "UPDATE {$this->table} SET title = :title, description = :description , updated_at = :updated_at WHERE id = :id";
+            $sql = "UPDATE {$this->table} SET " . $columns . ', updated_at = :updated_at WHERE id = :id';
             $req = Database::getBdd()->prepare($sql);
             $date = array("id" => $model->getId(), 'updated_at' => date('Y-m-d H:i:s'));
 
