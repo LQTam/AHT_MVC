@@ -64,7 +64,7 @@ class TasksController extends Controller
     public function delete($id)
     {
         $task = new Task();
-        $task->setId($id);
+        $task->id = $id;
 
         if ($this->taskRepo->delete($task)) {
             header("Location: " . WEBROOT . "tasks/index");

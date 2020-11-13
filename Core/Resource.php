@@ -88,6 +88,6 @@ class Resource implements ResourceInterface
         $sql = "DELETE FROM {$this->table} WHERE id = :id";
         $req = Database::getBdd()->prepare($sql);
 
-        return $req->execute([':id' => $model->getId()]);
+        return $req->execute([':id' => $model->id]);
     }
 }
