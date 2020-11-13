@@ -15,18 +15,20 @@ class Controller
     function render($filename)
     {
         extract($this->vars);
-
         ob_start();
         $viewPath = str_replace('Controller', '', get_class($this));
         $viewPath = str_replace('MVC\s', '', $viewPath);
         $viewPath = str_replace("\\", '', $viewPath);
         $viewPath = ROOT . '/Views/' . $viewPath . '/' . $filename . '.php';
+
         require($viewPath);
+
         $content_for_layout = ob_get_clean();
 
         if ($this->layout == false) {
             $content_for_layout;
         } else {
+
             require(ROOT . "Views/Layouts/" . $this->layout . '.php');
         }
     }

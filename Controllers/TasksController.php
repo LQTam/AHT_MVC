@@ -9,11 +9,13 @@ use MVC\Models\TaskRepository;
 class TasksController extends Controller
 {
     private $taskRepo;
+
     public function __construct()
     {
         $this->taskRepo = new TaskRepository('tasks', null, new Task);
     }
-    function index()
+
+    public function index()
     {
         $tasks = new Task();
         $d['tasks'] = $this->taskRepo->getAll($tasks);
@@ -21,15 +23,15 @@ class TasksController extends Controller
         $this->render("index");
     }
 
-    function create()
+    public function create()
     {
         extract($_POST);
 
         if (isset($title) && !empty($title) && isset($description) && !empty($description)) {
 
             $task = new Task();
-            $task->setTitle($title);
-            $task->setDescription($description);
+            $task->title = $title;
+            $task->description = $description;
 
             if ($this->taskRepo->add($task)) {
                 header("Location: " . WEBROOT . "tasks/index");
@@ -39,28 +41,27 @@ class TasksController extends Controller
         $this->render("create");
     }
 
-    function edit($id)
+    public function edit($id)
     {
         $task = new Task();
         extract($_POST);
 
         $d['task'] = $this->taskRepo->get($id);
-
         if (isset($title)) {
 
-            $task->setId($id);
-            $task->setTitle($title);
-            $task->setDescription($description);
+            $task->id = $id;
+            $task->title = $title;
+            $task->description = $description;
+
             if ($this->taskRepo->update($task)) {
                 header("Location: " . WEBROOT . "tasks/index");
             }
         }
-
         $this->set($d);
         $this->render("edit");
     }
 
-    function delete($id)
+    public function delete($id)
     {
         $task = new Task();
         $task->setId($id);

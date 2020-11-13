@@ -27,6 +27,7 @@ class Dispatcher
         $controlName = $name . "Controller";
         $file = 'MVC\\Controllers\\' . $controlName;
         $controller = new $file();
+
         return $controller;
     }
 }
