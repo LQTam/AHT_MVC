@@ -12,7 +12,7 @@ class TasksController extends Controller
 
     public function __construct()
     {
-        $this->taskRepo = new TaskRepository('tasks', null, new Task);
+        $this->taskRepo = new TaskRepository();
     }
 
     public function index()

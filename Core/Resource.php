@@ -13,6 +13,13 @@ class Resource implements ResourceInterface
     private $id;
     private $model;
 
+    /**
+     * Init the parameters need for
+     * @param string $table The table in database
+     * @param null|int $id The id field
+     * @param object $model The model mapping to table in database
+     */
+
     public function _init($table, $id, $model)
     {
         $this->table = $table;
